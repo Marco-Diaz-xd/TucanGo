@@ -40,14 +40,12 @@ El transporte informal en motocicleta (mototaxis) es una práctica común entre 
 
 ## 👥 Equipo
 
-Somos **4 integrantes**. Los nombres quedan pendientes de confirmar:
-
 | # | Nombre completo | Código estudiantil | Rol |
 |---|-----------------|--------------------|-----|
-| 1 | _(pendiente)_   | _(pendiente)_      | _(pendiente)_ |
-| 2 | _(pendiente)_   | _(pendiente)_      | _(pendiente)_ |
-| 3 | _(pendiente)_   | _(pendiente)_      | _(pendiente)_ |
-| 4 | _(pendiente)_   | _(pendiente)_      | _(pendiente)_ |
+| 1 | Jhonatan Alexander Saavedra Culma | _(pendiente)_ | _(pendiente)_ |
+| 2 | Gian Marco Castañeda Samboni | _(pendiente)_ | _(pendiente)_ |
+| 3 | Andrés David Pinilla Parra | _(pendiente)_ | _(pendiente)_ |
+| 4 | Juan Guillermo Ferrer Gasca | _(pendiente)_ | _(pendiente)_ |
 
 ---
 
