@@ -42,7 +42,7 @@ Somos **4 integrantes**. Los nombres quedan pendientes de confirmar:
 
 ## Documentación
 
-- **Modelo conceptual (Guía 2):** [`docs/modelo-conceptual.md`](docs/modelo-conceptual.md)
+- **Modelo conceptual (Guía 2):** [`Docs/modelo-conceptual.md`](Docs/modelo-conceptual.md)
   — Bitácora de Empatía, análisis señal/ruido, las 5 clases del dominio
   (`Estudiante`, `Motorista`, `Viaje`, `Calificacion`, `Pago`), asociaciones,
   multiplicidades y el diagrama UML v1.0.
