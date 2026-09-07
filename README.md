@@ -1,40 +1,88 @@
-# Lógica & Algoritmos II — Proyecto Java POO
+# TucanGo — Movilidad estudiantil segura en el campus
 
-Esqueleto fundacional de un proyecto Java con POO para la asignatura **Lógica &
-Algoritmos II** (Universidad de la Amazonia, Ingeniería de Sistemas, Semana 1).
-Define una arquitectura en capas, los estándares de codificación del curso y una
-entidad de ejemplo lista para reemplazar por la entidad real del equipo.
+**TucanGo** es un proyecto académico de **Lógica & Algoritmos II** (Universidad de la
+Amazonia, Ingeniería de Sistemas) que aplica Programación Orientada a Objetos en
+Java para modelar una solución a una problemática real del entorno universitario.
 
-> **Resultado esperado:** al abrir el proyecto y ejecutar `Main`, se imprime el
-> estado de un sensor y sus operaciones por consola. No requiere dependencias.
+## Idea del proyecto
 
-## Ruta rápida
+El transporte informal en motocicleta (mototaxis) es una práctica común entre los
+estudiantes para ir y volver del campus, pero opera **sin ningún control**: no hay
+registro de quién conduce, no hay tarifa definida y no hay forma de saber si un
+viaje fue seguro. El riesgo percibido es mayor para las estudiantes mujeres, y los
+motoristas trabajan sin ingreso estable ni respaldo.
 
-1. **Abrir en NetBeans** — File → New Project → Java with Ant → *Java Project
-   with Existing Sources* → seleccionar la carpeta raíz del proyecto.
-2. **Ejecutar** — clic derecho sobre `Main.java` → *Run File*.
-3. **Verificar** — la consola muestra el estado y el comportamiento del sensor.
+**TucanGo** propone entrelazar estos dos mundos — la universidad y el transporte
+informal — mediante un modelo de **confianza y trazabilidad**:
 
-## Estructura
+- **Seguridad para el estudiante:** cada viaje queda registrado (quién conduce, de
+  dónde a dónde, y confirmación de llegada), y se puede calificar el servicio.
+- **Formalización para el motorista:** trabaja sobre motoristas previamente
+  **verificados** (identificación, placa y SOAT vigente), con "clientes" asegurados
+  y **pagos justos** registrados.
+- **Bienestar universitario:** la Universidad actúa como garante de bienestar dentro
+  de su ámbito (verificación y control interno), sin habilitar transporte público.
+
+> **Encuadre responsable:** el sistema se plantea como una capa de seguridad y
+> confianza sobre motoristas verificados dentro del ámbito del campus. No habilita
+> ni legaliza el transporte público de pasajeros en moto (actividad no permitida a
+> nivel nacional); se concentra en lo que la Universidad sí puede controlar:
+> verificación, trazabilidad, reputación y pago.
+
+## Equipo
+
+Somos **4 integrantes**. Los nombres quedan pendientes de confirmar:
+
+| # | Nombre completo | Código estudiantil | Rol |
+|---|-----------------|--------------------|-----|
+| 1 | _(pendiente)_   | _(pendiente)_      | _(pendiente)_ |
+| 2 | _(pendiente)_   | _(pendiente)_      | _(pendiente)_ |
+| 3 | _(pendiente)_   | _(pendiente)_      | _(pendiente)_ |
+| 4 | _(pendiente)_   | _(pendiente)_      | _(pendiente)_ |
+
+## Documentación
+
+- **Modelo conceptual (Guía 2):** [`docs/modelo-conceptual.md`](docs/modelo-conceptual.md)
+  — Bitácora de Empatía, análisis señal/ruido, las 5 clases del dominio
+  (`Estudiante`, `Motorista`, `Viaje`, `Calificacion`, `Pago`), asociaciones,
+  multiplicidades y el diagrama UML v1.0.
+- **Material del curso (guías):** `Docs/`
+- **Especificación (SDD):** `openspec/`
+- **Gestión de tareas del equipo:** `Gestion_Tareas_Equipo_LogicaII.xlsx`
+
+## Stack técnico
+
+| Aspecto | Valor |
+|---------|-------|
+| Lenguaje | Java (POO) |
+| JDK | 21 (Microsoft OpenJDK) |
+| IDE | Apache NetBeans |
+| Build | Apache Ant (Java with Ant) |
+| Versión | `master` |
+
+## Estructura del repositorio
 
 ```
 .
-├── .gitignore                       # Reglas de control de versiones
-├── README.md                        # Este documento
-├── Docs/                            # Material del curso (guías, PDF)
-├── openspec/                        # Especificación del proyecto
+├── .gitignore                        # Reglas de control de versiones
+├── README.md                         # Este documento
+├── Docs/                             # Guías del curso (PDF)
+├── docs/                             # Documentos del proyecto (modelo conceptual)
+├── openspec/                         # Especificación del proyecto (SDD)
+├── Gestion_Tareas_Equipo_LogicaII.xlsx
 └── src/
     └── co/edu/uniamazonia/logica2/
-        ├── Main.java                # Punto de entrada (demo)
+        ├── Main.java                 # Punto de entrada (demo)
         └── modelo/
-            └── SensorAmbiental.java # Entidad de ejemplo (plantilla)
+            └── SensorAmbiental.java  # Plantilla de referencia (ejemplo de la Guía 1)
 ```
 
-## Arquitectura en capas
+> **Nota:** `SensorAmbiental` es una **plantilla de ejemplo** de la Guía 1 que ilustra
+> los estándares de codificación; no corresponde al dominio real del proyecto. Las
+> entidades definitivas (`Estudiante`, `Motorista`, `Viaje`, `Calificacion`, `Pago`)
+> se modelan en [`docs/modelo-conceptual.md`](docs/modelo-conceptual.md).
 
-El proyecto se organiza por paquete, de simple a escalable. La idea central es
-**empezar por el "Mundo del Problema"**: primero las entidades, después la lógica
-y la infraestructura.
+## Arquitectura en capas (futura implementación)
 
 | Capa | Paquete | Responsabilidad | Estado |
 |------|---------|-----------------|--------|
@@ -44,71 +92,27 @@ y la infraestructura.
 | `vista` | `co.edu.uniamazonia.logica2.vista` | Presentación / consola | Futura |
 | `util` | `co.edu.uniamazonia.logica2.util` | Helpers transversales | Futura |
 
-**Justificación:** modelar primero las entidades obliga a entender el problema
-antes de escribir lógica. Las capas `servicio` y `persistencia` se agregan cuando
-el modelo esté estable, y `vista` se conecta al final. Este orden evita acoplar
-la lógica de negocio a la interfaz o a un mecanismo de almacenamiento concreto.
-
-## Convenciones de codificación
-
-Estándares obligatorios de la guía del curso. Registro neutral y profesional.
+## Convenciones de codificación (estándares del curso)
 
 | Elemento | Regla | Ejemplo |
 |----------|-------|---------|
-| Clase | Sustantivo en singular, UpperCamelCase | `SensorAmbiental`, `Guardabosques` |
-| Atributo | `private`, lowerCamelCase | `private String ubicacion;` |
-| Método | `public`, verbo en infinitivo, lowerCamelCase | `registrarLectura()`, `calibrar()` |
+| Clase | Sustantivo en singular, UpperCamelCase | `Motorista`, `Viaje` |
+| Atributo | `private`, lowerCamelCase | `private String placa;` |
+| Método | `public`, verbo en infinitivo, lowerCamelCase | `aceptarViaje()`, `calcularTarifa()` |
 | Tipos | Coherentes con el dato | `String`, `int`, `double`, `boolean` |
-| Encapsulamiento | Atributos privados + getters/setters | `getNivelBateria()` / `setNivelBateria(...)` |
+| Encapsulamiento | Atributos privados + getters/setters | `getTarifa()` / `setTarifa(...)` |
 
 Notas:
 
 - Para atributos `boolean`, el getter se nombra con `is` (convención JavaBeans):
-  `isActivo()` en lugar de `getActivo()`.
+  `isSoatVigente()` en lugar de `getSoatVigente()`.
 - Los comentarios Javadoc se escriben en español, sin jerga regional.
-
-## Entidad de ejemplo: `SensorAmbiental`
-
-`src/co/edu/uniamazonia/logica2/modelo/SensorAmbiental.java` es una **plantilla
-de referencia**, no la entidad definitiva. Ilustra todos los estándares:
-
-- 4 atributos privados con tipos coherentes: `identificador` (String),
-  `ubicacion` (String), `nivelBateria` (double), `activo` (boolean).
-- Constructor que inicializa todos los atributos.
-- Getters y setters para cada atributo.
-- 3 métodos de comportamiento: `registrarLectura()`, `emitirAlerta()`, `calibrar()`.
-
-Reemplácela por la entidad real del equipo cuando el problema esté definido.
-
-## Abrir en NetBeans
-
-1. File → **New Project**.
-2. Categoría *Java with Ant* → *Java Project with Existing Sources*.
-3. En *Project Folder*, seleccionar la carpeta raíz del proyecto.
-4. NetBeans genera `build.xml` y la carpeta `nbproject/` automáticamente
-   (no deben crearse a mano).
-
-## Compilar y ejecutar desde CLI
-
-Verificación manual con JDK 21 (los acentos exigen `-encoding UTF-8`):
-
-```powershell
-& "C:\Program Files\Microsoft\jdk-21.0.12.101-hotspot\bin\javac.exe" -encoding UTF-8 -d build src/co/edu/uniamazonia/logica2/Main.java src/co/edu/uniamazonia/logica2/modelo/SensorAmbiental.java
-& "C:\Program Files\Microsoft\jdk-21.0.12.101-hotspot\bin\java.exe" -cp build co.edu.uniamazonia.logica2.Main
-```
-
-## Checklist de verificación
-
-- [ ] `javac` compila sin errores con `-encoding UTF-8`.
-- [ ] `Main` imprime el estado inicial, las operaciones y el estado final.
-- [ ] Los atributos están marcados `private` y expuestos vía getters/setters.
-- [ ] Las clases usan UpperCamelCase y los métodos verbos en infinitivo.
 
 ## Roadmap
 
-- [ ] Reemplazar `SensorAmbiental` por la(s) entidad(es) real(es) del equipo.
+- [ ] Confirmar los 4 integrantes del equipo y completar la tabla.
+- [ ] Traducir el modelo conceptual (5 clases) a código Java del dominio.
 - [ ] Agregar la capa `servicio` con la lógica de negocio.
 - [ ] Agregar la capa `persistencia` para guardar/cargar datos.
 - [ ] Conectar la capa `vista` (menú por consola).
-- [ ] Incorporar JUnit para pruebas unitarias de las entidades y servicios.
-- [ ] Documentar cada entidad con su Javadoc correspondiente.
+- [ ] Incorporar JUnit para pruebas unitarias.
