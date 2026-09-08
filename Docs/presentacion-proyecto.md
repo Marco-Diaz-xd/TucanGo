@@ -1,7 +1,6 @@
 # TucanGo — Presentación del Proyecto
 
-> **Curso:** Lógica & Algoritmos II  
-> **Universidad:** Universidad de la Amazonia — Ingeniería de Sistemas  
+> **Universidad de la Amazonia — Ingeniería de Sistemas**  
 > **Equipo:** Jhonatan A. Saavedra C., Gian M. Castañeda S., Andrés D. Pinilla P., Juan G. Ferrer G.  
 > **Repositorio:** https://github.com/Stellel-One/TucanGo
 
@@ -11,59 +10,61 @@
 
 # TucanGo
 ## Movilidad estudiantil segura en el campus
-### Modelo POO + UML v1.0 — Guía 2
+### Sistema de confianza y trazabilidad para transporte en motocicleta
 
 ---
 
 ## 2. Problemática
 
-**El transporte informal en motocicleta (mototaxis) alrededor del campus:**
+El transporte informal en motocicleta (mototaxis) es la opción principal de movilidad para los estudiantes del campus, pero opera **sin ningún control ni garantías**:
 
-- ❌ **Sin control:** no hay registro de quién conduce
-- ❌ **Sin trazabilidad:** no se sabe si un viaje fue seguro
-- ❌ **Tarifas arbitrarias:** no hay “pago justo”
-- ⚠️ **Riesgo diferenciado:** mayor percepción de inseguridad en estudiantes mujeres
-- 🏍️ **Motoristas informales:** sin ingreso estable ni respaldo institucional
+- **Sin registro:** no hay identificación verificada de quién conduce
+- **Sin trazabilidad:** imposible saber si un viaje llegó a destino seguro
+- **Tarifas arbitrarias:** no existe referencia de "pago justo"
+- **Riesgo diferenciado:** mayor percepción de inseguridad en estudiantes mujeres
+- **Motoristas sin respaldo:** trabajan sin formalización ni garantías
 
-> *“Dos mundos operando en paralelo: la Universidad y el transporte informal. TucanGo los entrelaza.”*
+> **Dos realidades paralelas:** la comunidad universitaria y el transporte informal.  
+> **TucanGo los conecta mediante verificación, trazabilidad y reputación.**
 
 ---
 
 ## 3. Objetivos
 
 ### Objetivo General
-Diseñar un **modelo orientado a objetos (UML v1.0)** que formalice la relación estudiante–motorista mediante **verificación, trazabilidad, reputación y pago**, dentro del ámbito de control de la Universidad.
+Diseñar e implementar un **sistema de confianza y trazabilidad** que formalice la relación estudiante–motorista mediante verificación de identidad, registro de viajes, reputación y pagos justos, operando dentro del ámbito de control de la Universidad.
 
 ### Objetivos Específicos
 | # | Objetivo |
 |---|----------|
-| 1 | Identificar entidades del “Mundo del Problema” (Guía 2: descubrimiento lingüístico) |
-| 2 | Definir 5 clases con ≥2 atributos y ≥1 responsabilidad justificada c/u (Guía 2) |
-| 3 | Establecer asociaciones y multiplicidades lógicas (Guía 2) |
-| 4 | Delimitar el encuadre legal: **no habilita transporte público ilegal**, solo capa de verificación dentro del campus |
-| 5 | Preparar base para implementación Java POO (fase posterior) |
+| 1 | **Verificación de motoristas:** validar identificación, placa y SOAT vigente antes de permitir viajes |
+| 2 | **Trazabilidad completa:** registrar origen, destino, hora y confirmación de llegada de cada viaje |
+| 3 | **Reputación y seguridad:** sistema de calificación (1–5) y comentarios por viaje |
+| 4 | **Formalización económica:** registro de tarifa acordada y estado de pago (pendiente/confirmado) |
+| 5 | **Enfoque responsable:** operar solo dentro de lo que la Universidad puede controlar (campus), sin habilitar transporte público ilegal |
 
 ---
 
-## 4. Alcance
+## 4. Alcance del Proyecto
 
-### ✅ Dentro del alcance (In-scope)
-- Modelo conceptual de **5 clases**: `Estudiante`, `Motorista`, `Viaje`, `Calificacion`, `Pago`
-- Verificación de motorista: identificación + placa + SOAT vigente
-- Trazabilidad de viaje: origen, destino, tarifa, inicio/fin
-- Reputación: calificación 1–5 + comentario por viaje
-- Pago registrado: monto + estado (pendiente/confirmado)
-- Encuadre responsable (no legaliza mototaxismo)
+### ✅ Incluido (In-scope)
+- Modelo de dominio con 5 entidades: Estudiante, Motorista, Viaje, Calificación, Pago
+- Verificación documental de motoristas (identificación + placa + SOAT)
+- Registro de viaje: solicitud, inicio, fin, confirmación de llegada segura
+- Sistema de calificación y reputación por viaje
+- Registro de tarifa y estado de pago
+- Arquitectura en capas (modelo, servicio, persistencia, vista)
 
-### ❌ Fuera del alcance (Out-of-scope)
-- App móvil / backend / base de datos (fase futura)
-- Gestión de flotas o rutas optimizadas
-- Habilitación legal del transporte público en moto (competencia municipal/nacional)
-- Pasarela de pagos real (solo modelo de registro)
+### ❌ No incluido (Out-of-scope)
+- Desarrollo de aplicación móvil nativa (iOS/Android)
+- Pasarela de pagos electrónicos real
+- Optimización de rutas / despacho automático
+- Gestión de flotas o múltiples sedes
+- Habilitación legal del transporte público en motocicleta (competencia municipal/nacional)
 
 ---
 
-## 5. Solución: TucanGo (visión general)
+## 5. Solución: Arquitectura del Sistema
 
 ```mermaid
 classDiagram
@@ -72,103 +73,103 @@ classDiagram
     class Viaje      { -codigoViaje -origen -destino -tarifa +calcularTarifa() +iniciarViaje() +finalizarViaje() }
     class Calificacion { -puntaje -comentario +registrarCalificacion() +obtenerPuntaje() }
     class Pago       { -valor -estado +registrarPago() +confirmarPago() }
-    Estudiante "1" --> "0..*" Viaje
-    Motorista  "1" --> "0..*" Viaje
-    Viaje      "1" --> "0..1" Calificacion
-    Viaje      "1" --> "1"    Pago
+    Estudiante "1" --> "0..*" Viaje : solicita
+    Motorista  "1" --> "0..*" Viaje : atiende
+    Viaje      "1" --> "0..1" Calificacion : genera
+    Viaje      "1" --> "1"    Pago : registra
 ```
 
-**Clase transaccional central:** `Viaje` — vincula a todas las demás.
+**Entidad transaccional central:** `Viaje` — vincula estudiante, motorista, calificación y pago.
 
 ---
 
-## 6. Clases del Modelo (resumen)
+## 6. Entidades del Modelo
 
-| Clase | Atributos clave | Responsabilidad principal |
-|-------|-----------------|---------------------------|
-| `Estudiante` | `codigo`, `nombre`, `telefono` | `solicitarViaje()`, `marcarLlegadaSegura()` |
-| `Motorista` | `identificacion`, `placa`, `soatVigente` | `aceptarViaje()`, `verificarDocumentos()` |
-| `Viaje` | `codigoViaje`, `origen`, `destino`, `tarifa` | `calcularTarifa()`, `iniciarViaje()`, `finalizarViaje()` |
-| `Calificacion` | `puntaje` (1–5), `comentario` | `registrarCalificacion()`, `obtenerPuntaje()` |
-| `Pago` | `valor`, `estado` | `registrarPago()`, `confirmarPago()` |
+| Entidad | Propósito | Atributos clave | Responsabilidad principal |
+|---------|-----------|-----------------|---------------------------|
+| **Estudiante** | Solicitante del servicio | `codigo`, `nombre`, `telefono` | Solicitar viaje, confirmar llegada segura |
+| **Motorista** | Proveedor verificado | `identificacion`, `placa`, `soatVigente` | Aceptar viaje, verificar documentos |
+| **Viaje** | Transacción núcleo | `codigoViaje`, `origen`, `destino`, `tarifa` | Calcular tarifa, iniciar/finalizar viaje |
+| **Calificación** | Reputación y seguridad | `puntaje` (1–5), `comentario` | Registrar evaluación, consultar reputación |
+| **Pago** | Formalización económica | `valor`, `estado` | Registrar pago, confirmar estado |
 
-> Todas las clases: atributos `private` + métodos `public` verbo infinitivo (estándares curso).
-
----
-
-## 7. Encuadre Responsable (clave)
-
-| Qué **SÍ** hace TucanGo | Qué **NO** hace |
-|-------------------------|-----------------|
-| Verifica motorista dentro del campus (docs, SOAT) | ❌ Legaliza transporte público en moto |
-| Registra trazabilidad de cada viaje | ❌ Opera fuera del ámbito universitario |
-| Genera reputación (calificación) | ❌ Sustituye a autoridad de tránsito |
-| Registra pago justo acordado | ❌ Procesa pagos reales (solo modelo) |
-
-**Base legal:** Transporte de pasajeros en moto es ilegal a nivel nacional (Ley 336/1996, Dec. 1079/2015). La U solo puede regular **dentro de su campus** (autonomía universitaria, Ley 30/1992).
+> Diseño bajo estándares POO: atributos `private`, métodos `public` verbo infinitivo, encapsulamiento.
 
 ---
 
-## 8. Stack Técnico
+## 7. Enfoque Responsable (Marco Normativo)
+
+| Lo que TucanGo **SÍ** hace | Lo que TucanGo **NO** hace |
+|----------------------------|----------------------------|
+| Verifica motorista dentro del campus (docs, placa, SOAT) | ❌ Legaliza transporte público en moto |
+| Registra trazabilidad completa de cada viaje | ❌ Opera fuera del ámbito universitario |
+| Genera reputación mediante calificaciones | ❌ Sustituye autoridad de tránsito |
+| Registra tarifa acordada y estado de pago | ❌ Procesa pagos electrónicos reales |
+
+**Base normativa:** El transporte de pasajeros en motocicleta es ilegal a nivel nacional (Ley 336/1996, Dec. 1079/2015). La Universidad, en ejercicio de su autonomía (Ley 30/1992), puede regular **dentro de su campus** exigiendo documentos y condiciones de seguridad. TucanGo opera estrictamente en ese marco.
+
+---
+
+## 8. Stack Tecnológico
 
 | Capa | Tecnología |
 |------|------------|
-| Lenguaje | Java (POO) |
+| Lenguaje | Java (Programación Orientada a Objetos) |
 | JDK | 21 (Microsoft OpenJDK) |
 | IDE | Apache NetBeans |
-| Build | Apache Ant (Java with Ant) |
+| Build | Apache Ant |
 | Control de versiones | Git + GitHub |
-| Modelado | UML v1.0 (Mermaid) |
+| Modelado | UML (Mermaid) |
+| Testing | JUnit (planificado) |
 
 ---
 
-## 9. Equipo
+## 9. Equipo de Trabajo
 
-| Integrante | Rol (sugerido) |
-|------------|----------------|
-| Jhonatan Alexander Saavedra Culma | _(por definir)_ |
-| Gian Marco Castañeda Samboni | _(por definir)_ |
-| Andrés David Pinilla Parra | _(por definir)_ |
-| Juan Guillermo Ferrer Gasca | _(por definir)_ |
-
-> Roles típicos: **Líder / Documentación / Modelado UML / Backend Java / Testing**
+| Integrante | Rol sugerido |
+|------------|--------------|
+| Jhonatan Alexander Saavedra Culma | Líder / Modelado UML |
+| Gian Marco Castañeda Samboni | Backend Java / Lógica de negocio |
+| Andrés David Pinilla Parra | Persistencia / Pruebas |
+| Juan Guillermo Ferrer Gasca | Documentación / Arquitectura |
 
 ---
 
-## 10. Roadmap (Próximos pasos)
+## 10. Roadmap
 
 | Fase | Actividad | Estado |
 |------|-----------|--------|
-| 1 | Modelo UML v1.0 (Guía 2) | ✅ **Entregado** |
-| 2 | Completar códigos y roles del equipo | 🔄 Pendiente |
-| 3 | Implementar 5 clases en Java (`src/.../modelo/`) | ⏳ Próxima |
-| 4 | Capa `servicio` (lógica de negocio) | ⏳ Futura |
-| 5 | Capa `persistencia` (archivos/BD) | ⏳ Futura |
-| 6 | Capa `vista` (consola / menú) | ⏳ Futura |
-| 7 | Pruebas JUnit | ⏳ Futura |
+| 1 | Modelo de dominio UML (5 entidades, asociaciones, multiplicidades) | ✅ Completado |
+| 2 | Implementación Java: 5 clases del dominio (`src/modelo/`) | 🔄 En progreso |
+| 3 | Capa `servicio` — lógica de negocio (gestión de viajes, validaciones) | ⏳ Planificada |
+| 4 | Capa `persistencia` — almacenamiento (archivos / BD) | ⏳ Planificada |
+| 5 | Capa `vista` — interfaz de consola / menú interactivo | ⏳ Planificada |
+| 6 | Pruebas unitarias (JUnit) y de integración | ⏳ Planificada |
+| 7 | Empaquetado, documentación técnica y entrega final | ⏳ Planificada |
 
 ---
 
-## 11. Entregables en el Repositorio
+## 11. Entregables del Proyecto
 
-| Archivo | Descripción |
-|---------|-------------|
-| `README.md` | Pantalla principal: logo, banner, UML renderizado, equipo |
-| `Docs/diagrama-uml-v1.0.md` | **Entregable Guía 2** completo (Bitácora, señal/ruido, 5 clases, UML Mermaid + textual, checklist) |
-| `Docs/modelo-conceptual.md` | Modelo conceptual detallado (Guías 1 y 2) |
-| `Docs/Sem1Est (1).pdf` | Guía 1 del profesor |
-| `Docs/Sem2_Expo2.pdf` | Guía 2 del profesor (diapositivas) |
-| `openspec/` | Configuración SDD para fases futuras |
+| Artefacto | Ubicación | Descripción |
+|-----------|-----------|-------------|
+| Modelo UML v1.0 | `Docs/diagrama-uml-v1.0.md` | 5 clases, asociaciones, multiplicidades, checklist |
+| Código fuente Java | `src/co/edu/uniamazonia/logica2/modelo/` | 5 clases del dominio + arquitectura en capas |
+| Documentación técnica | `README.md`, `Docs/` | Arquitectura, convenciones, roadmap |
+| Presentación | `Docs/presentacion-proyecto.pdf` | Este documento (12 slides) |
+| Gestión de tareas | `Gestion_Tareas_Equipo_LogicaII.xlsx` | Seguimiento de actividades por integrante |
 
 ---
 
-## 12. Cierre / Q&A
+## 12. Cierre
 
-# ¡Gracias!
+# TucanGo
+## Conectando seguridad, confianza y formalización
+
+> **“No modelamos para habilitar lo ilegal; modelamos para proteger a quien viaja y formalizar a quien conduce dentro de lo que la Universidad sí puede controlar.”**
+
+---
 
 **Repositorio:** https://github.com/Stellel-One/TucanGo  
-**Contacto:** Juan Guillermo Ferrer Gasca (equipo)
-
----
-
-> “No modelamos para habilitar lo ilegal; modelamos para **proteger a quien viaja** y **formalizar a quien conduce** dentro de lo que la Universidad **sí puede controlar**.”
+**Contacto:** Juan Guillermo Ferrer Gasca — Equipo TucanGo  
+**Universidad de la Amazonia — Ingeniería de Sistemas**
