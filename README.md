@@ -42,10 +42,12 @@ Somos **4 integrantes**. Los nombres quedan pendientes de confirmar:
 
 ## Documentación
 
-- **Modelo conceptual (Guía 2):** [`docs/modelo-conceptual.md`](docs/modelo-conceptual.md)
+- **Modelo conceptual (Guía 2):** [`Docs/modelo-conceptual.md`](Docs/modelo-conceptual.md)
   — Bitácora de Empatía, análisis señal/ruido, las 5 clases del dominio
-  (`Estudiante`, `Motorista`, `Viaje`, `Calificacion`, `Pago`), asociaciones,
-  multiplicidades y el diagrama UML v1.0.
+  (`Estudiante`, `Motorista`, `Viaje`, `Calificacion`, `Pago`), asociaciones y
+  multiplicidades.
+- **Diagrama UML v1.0:** [`Docs/diagrama-uml-v1.0.md`](Docs/diagrama-uml-v1.0.md)
+  — Diagrama de clases y especificación del modelo de dominio.
 - **Material del curso (guías):** `Docs/`
 - **Especificación (SDD):** `openspec/`
 - **Gestión de tareas del equipo:** `Gestion_Tareas_Equipo_LogicaII.xlsx`
@@ -66,8 +68,11 @@ Somos **4 integrantes**. Los nombres quedan pendientes de confirmar:
 .
 ├── .gitignore                        # Reglas de control de versiones
 ├── README.md                         # Este documento
-├── Docs/                             # Guías del curso (PDF)
-├── docs/                             # Documentos del proyecto (modelo conceptual)
+├── Docs/                             # Documentación y material de apoyo
+│   ├── diagrama-uml-v1.0.md          # Diagrama UML v1.0 de clases
+│   ├── modelo-conceptual.md          # Bitácora de empatía y modelo conceptual
+│   ├── Sem1Est (1).pdf               # Material y guías del curso (PDF)
+│   └── Sem2_Expo2.pdf
 ├── openspec/                         # Especificación del proyecto (SDD)
 ├── Gestion_Tareas_Equipo_LogicaII.xlsx
 └── src/
@@ -80,7 +85,43 @@ Somos **4 integrantes**. Los nombres quedan pendientes de confirmar:
 > **Nota:** `SensorAmbiental` es una **plantilla de ejemplo** de la Guía 1 que ilustra
 > los estándares de codificación; no corresponde al dominio real del proyecto. Las
 > entidades definitivas (`Estudiante`, `Motorista`, `Viaje`, `Calificacion`, `Pago`)
-> se modelan en [`docs/modelo-conceptual.md`](docs/modelo-conceptual.md).
+> se modelan en [`Docs/modelo-conceptual.md`](Docs/modelo-conceptual.md).
+
+## Compilación y Ejecución
+
+El proyecto puede compilarse y ejecutarse mediante **Apache Ant** (estándar de NetBeans) o directamente mediante la terminal con el JDK:
+
+### Con Apache Ant
+
+- **Compilar el proyecto:**
+  ```bash
+  ant compile
+  ```
+- **Ejecutar la aplicación:**
+  ```bash
+  ant run
+  ```
+- **Limpiar y recompilar:**
+  ```bash
+  ant clean compile
+  ```
+- **Construir JAR distribuible:**
+  ```bash
+  ant jar
+  ```
+
+### Con Java CLI (javac / java)
+
+Desde la raíz del repositorio:
+
+- **Compilar:**
+  ```bash
+  javac -d bin src/co/edu/uniamazonia/logica2/Main.java src/co/edu/uniamazonia/logica2/modelo/*.java
+  ```
+- **Ejecutar:**
+  ```bash
+  java -cp bin co.edu.uniamazonia.logica2.Main
+  ```
 
 ## Arquitectura en capas (futura implementación)
 
